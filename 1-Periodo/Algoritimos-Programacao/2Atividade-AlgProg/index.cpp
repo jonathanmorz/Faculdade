@@ -1,8 +1,9 @@
-#include <iostream>  // Biblioteca para entrada e saída padrão (cin, cout)
-#include <vector>    // Estrutura de dados dinâmica (vetor)
+// Bibliotecas
+#include <iostream>  // Entrada e saída padrão (cin, cout)
+#include <vector>    // Uso de vetor
 #include <string>    // Manipulação de strings
-#include <algorithm> // Algoritmos padrão (usado na linha 338 std::numeric_limits)
-#include <cstdlib>   // Para uso da função system()
+#include <limits> // Usada na limpagem do buffer de entrada
+#include <cstdlib>   // Uso da função system()
 
 // Identifica o sistema operacional
 #ifdef _WIN32
@@ -102,7 +103,8 @@ void cadastro()
         }
         else
         {
-            printf("Entrada invalida!\n");
+            printf("{Entrada invalida!(character ou numero muito extenso)}\n");
+            printf(" Idade: ");
             std::cin.clear(); // limpa erro
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
@@ -119,15 +121,17 @@ void cadastro()
         }
         else if (buscar_posicao_aluno(aluno_novo.matricula) != -1)
         {
-            printf("Matricula ja registrada!\n");
+            printf("{Matricula ja registrada!}\n");
+            printf(" Matricula: ");
         }
         else
         {
-            printf("Entrada invalida!\n");
+            printf("{Entrada invalida!(character ou numero muito extenso)}\n");
+            printf(" Matricula: ");
         }
 
-        std::cin.clear();
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cin.clear(); // limpa erro
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // limpar o buffer de entrada(remove todos os caracteres remanescentes)
     }
 
     // Entrada da nota final
@@ -140,7 +144,8 @@ void cadastro()
         }
         else
         {
-            printf("Entrada invalida!\n");
+            printf("Entrada invalida!(character ou numero muito extenso!)\n");
+            printf(" Nota final: ");
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
@@ -160,7 +165,7 @@ void listagem()
         // Acesso ao aluno
         Aluno aluno_unidade = vector_alunos.at(i);
 
-        // Impressão formatada
+        // Impressão do aluno
         printf(" Nome: %s\n Idade: %i\n Matricula: %i\n Nota final: %.2f\n",
                aluno_unidade.nome.c_str(),
                aluno_unidade.idade,
@@ -235,7 +240,7 @@ bool mudar_nota()
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         std::cin.get();
-        limpar_terminal();
+        std::cin.clear();
         return false;
     }
 
@@ -259,9 +264,21 @@ bool mudar_nota()
            vector_alunos.at(posicao).nota_final);
 
     printf("Nova nota: ");
-    std::cin >> nova_nota;
+    while (true)
+    {
+        if(std::cin >> nova_nota){
+            break;
+        }
+        else{
+            printf("{Entrada invalida!(character ou numero muito extenso)}\n");
+            printf("Nova nota: ");
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        }
+    }
+    
 
-    // Atualização direta no vetor
+    // Atualização no vetor
     vector_alunos.at(posicao).nota_final = nova_nota;
 
     return true;
@@ -337,7 +354,7 @@ void processamento_input(int escolha)
     printf("Aperte [Enter] para continuar");
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     std::cin.get();
-
+    std::cin.clear();
     limpar_terminal();
 }
 
@@ -358,7 +375,7 @@ int main()
         // Validação da escolha do menu
         while (true)
         {
-            if (std::cin >> escolha && escolha < 5)
+            if (std::cin >> escolha && escolha < 5 && escolha >= 0)
             {
                 break;
             }
@@ -376,6 +393,8 @@ int main()
 
         processamento_input(escolha);
     }
-
+    printf("=========================================\n");
+    printf("         Fim do programa\n");
+    printf("=========================================\n");
     return 0;
 }
