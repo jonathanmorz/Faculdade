@@ -1,23 +1,33 @@
-
 #Fatorial
-def fatorial(n):
-    if n < 0:
-        raise ValueError("Não existe fatorial de número negativo")
+def Fatorial(n):
     if n == 0 or n == 1:
         return 1
-    return n * fatorial(n - 1)
+    else:
+        return n * Fatorial(n - 1)
 
-print(fatorial(5))
+# Exemplos de utilização
+print("Fatorial(0)  =", Fatorial(0))
+print("Fatorial(1)  =", Fatorial(1))
+print("Fatorial(5)  =", Fatorial(5))
+print("Fatorial(7)  =", Fatorial(7))
+print("Fatorial(10) =", Fatorial(10))
+
+raise SystemExit
 
 #Fibonacci
-def fibonacci_personalizado(inicio, quantidade):
-    sequencia = [inicio, inicio]
-    for x in range(quantidade - 2):
-        proximo = sequencia[-1] + sequencia[-2]
-        sequencia.append(proximo)
-    return sequencia
+def F(n):
+    if n == 0:
+        return 0
+    if n == 1:
+        return 1
+    return F(n - 1) + F(n - 2)
 
-print(fibonacci_personalizado(1,10))
+# Exemplos de utilização
+print("F(1)  =", F(1))
+print("F(3)  =", F(3))
+print("F(6)  =", F(6))
+print("F(10)  =", F(10))
+
 
 #Soma lista
 lista = [1,2,3,4,5]
@@ -52,4 +62,3 @@ def contagem_ocorrencias(vetor,valor):
     return quantidade
 
 print(contagem_ocorrencias(vetor_num,1))
-    
